@@ -42,21 +42,23 @@ function dateFormat(fmt, date) {
 /**
  * 结算
  */
-let settleFun = () => {
-  settleStatus = true
 
+let settleFun = () => {
+  let settleTimer;
+  settleStatus = true
+  console.warn('提交订单')
+  let all_seclect = document.getElementById('J_SelectAll1')
+  all_seclect.click()
   settleTimer = setInterval(() => {
     let go_button = document.getElementById('J_Go')
-    let select_all = document.getElementById('J_SelectAll1')
-    select_all.click()
     if (go_button && go_button.className.indexOf('submit-btn-disabled') === -1) {
-      console.log(`当前时间为：${dateFormat('YYYY-mm-dd HH:MM:SS', new Date())} 开始抢购`)
       clearInterval(settleTimer)
+      console.log(`当前时间为：${dateFormat('YYYY-mm-dd HH:MM:SS', new Date())} 开始抢购`)
       go_button.click()
     } else {
-      console.log(`当前时间为：${dateFormat('YYYY-mm-dd HH:MM:SS', new Date())} 购物车中未选择商品 无法抢购`)
+      console.log('go_button', go_button.classList.join(','))
     }
-  }, 10)
+  }, 2)
 }
 
 /**
@@ -84,6 +86,7 @@ let submitFun = () => {
 let main = () => {
   let startTime = new Date(buyTime).getTime()
   let nowTime = new Date().getTime()
+  console.info('是否到时间', nowTime >= startTime)
   if (nowTime >= startTime) {
     let href = window.location.href
     // 判断当前所在页面
